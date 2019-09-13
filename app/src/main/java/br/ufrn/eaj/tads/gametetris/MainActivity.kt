@@ -67,14 +67,14 @@ class MainActivity : AppCompatActivity() {
                     //limpa tela
                     for (i in 0 until LINHA) {
                         for (j in 0 until COLUNA) {
-                            boardView[i][j]!!.setImageResource(R.drawable.black)
+                            boardView[i][j]!!.setImageResource(R.drawable.white)
                         }
                     }
                     //move peça atual
                     pt.moveDown()
                     //print peça
                     try {
-                        boardView[pt.x][pt.y]!!.setImageResource(R.drawable.white)
+                        boardView[pt.x][pt.y]!!.setImageResource(R.drawable.green)
                     }catch (e:ArrayIndexOutOfBoundsException ) {
                         //se a peça passou das bordas eu vou parar o jogo
                         running = false

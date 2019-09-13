@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GameTetris</string>
+    <string name="configurar">Configurar</string>
+    <string name="novo_jogo">Novo Jogo</string>
 </resources>
