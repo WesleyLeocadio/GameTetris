@@ -7,8 +7,16 @@ abstract class Piece(var line:Int, var column:Int){
     lateinit var pointC: Point
     lateinit var pointD: Point
 
+
+    abstract fun moveTop()
+    abstract fun moveRight()
     abstract fun moveDown()
     abstract fun moveLeft()
-    abstract fun moveRight()
-    abstract fun moveRotate()
+    abstract  fun moveRotate()
+
+    abstract var color:Int
+     var fleck:Int=1
+
+
+
 }

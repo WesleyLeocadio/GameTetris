@@ -2,9 +2,6 @@ package br.ufrn.eaj.tads.gametetris.domain
 
 class Point (var line:Int, var column:Int) {
 
-    fun moveDown(){
-        line++
-    }
 
     fun moveLeft(){
         column--
@@ -13,4 +10,12 @@ class Point (var line:Int, var column:Int) {
     fun moveRight(){
         column++
     }
+
+    fun moveDown(){
+        line++
+    }
+    fun moveTop(){
+        line--
+    }
+
 }
