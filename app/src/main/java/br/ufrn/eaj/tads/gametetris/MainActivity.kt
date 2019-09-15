@@ -10,8 +10,11 @@ import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import br.ufrn.eaj.tads.gametetris.domain.I
 import br.ufrn.eaj.tads.gametetris.domain.L
 import br.ufrn.eaj.tads.gametetris.domain.O
+import br.ufrn.eaj.tads.gametetris.domain.S
+import br.ufrn.eaj.tads.gametetris.domain.T
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     var running = true
     var speed:Long = 300
 
-    var pt = L(1,16)
+    var pt = T(3,15)
 
 
 
@@ -73,7 +76,12 @@ class MainActivity : AppCompatActivity() {
                     //print peça
 
                     try {
-                            when(pt.color){
+
+                        boardView[pt.pointA.line][pt.pointA.column]!!.setImageResource(R.drawable.green)
+                        boardView[pt.pointB.line][pt.pointB.column]!!.setImageResource(R.drawable.green)
+                        boardView[pt.pointC.line][pt.pointC.column]!!.setImageResource(R.drawable.green)
+                        boardView[pt.pointD.line][pt.pointD.column]!!.setImageResource(R.drawable.green)
+                     /*       when(pt.color){
                                 1->{
                                     boardView[pt.pointA.line][pt.pointA.column]!!.setImageResource(R.drawable.green)
                                     boardView[pt.pointB.line][pt.pointB.column]!!.setImageResource(R.drawable.green)
@@ -86,9 +94,15 @@ class MainActivity : AppCompatActivity() {
                                     boardView[pt.pointC.line][pt.pointC.column]!!.setImageResource(R.drawable.black)
                                     boardView[pt.pointD.line][pt.pointD.column]!!.setImageResource(R.drawable.black)
                                 }
+                                3->{
+                                    boardView[pt.pointA.line][pt.pointA.column]!!.setImageResource(R.drawable.gray)
+                                    boardView[pt.pointB.line][pt.pointB.column]!!.setImageResource(R.drawable.gray)
+                                    boardView[pt.pointC.line][pt.pointC.column]!!.setImageResource(R.drawable.gray)
+                                    boardView[pt.pointD.line][pt.pointD.column]!!.setImageResource(R.drawable.gray)
+                                }
 
                             }
-
+*/
                     }catch (e:ArrayIndexOutOfBoundsException ) {
                         //se a peça passou das bordas eu vou parar o jogo
                         running = false

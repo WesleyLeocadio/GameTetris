@@ -1,15 +1,22 @@
 package br.ufrn.eaj.tads.gametetris.domain
+/*
+   *
+   *       |D|
+   *   |C| |A| |B|
+   *
+   *
+   * */
 
-class O(line:Int,column:Int) :Piece(line, column) {
+class T(line:Int,column:Int) :Piece(line, column) {
 
     init {
         pointB = Point(line,column+1)
-        pointC = Point(line+1,column)
-        pointD = Point(line+1,column+1)
+        pointC = Point(line,column-1)
+        pointD = Point(line-1,column)
 
     }
 
-    override var color: Int=2
+    override var color: Int=4
 
     override fun moveTop(){
         pointA.moveTop()
