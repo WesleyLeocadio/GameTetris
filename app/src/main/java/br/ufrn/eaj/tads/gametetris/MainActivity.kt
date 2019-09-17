@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                     for (i in 0 until LINHA) {
                         for (j in 0 until COLUNA) {
                             if (board[i][j] == 0){
-                                boardView[i][j]!!.setImageResource(R.drawable.white)
+                                boardView[i][j]!!.setImageResource(R.drawable.black)
                             }
                         }
                     }

@@ -27,8 +27,8 @@ class StartActivity : AppCompatActivity(),View.OnClickListener {
 
             }
             btnConfiguracoes.id->{
-               // var i = Intent(this, ConfigurarActivity::class.java)
-               // startActivity(i)
+                var i = Intent(this, ConfiguracaoActivity::class.java)
+                startActivity(i)
 
             }
 

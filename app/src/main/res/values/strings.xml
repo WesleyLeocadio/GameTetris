@@ -5,4 +5,7 @@
     <string name="esq">Esq</string>
     <string name="dir">Dir</string>
     <string name="rot">Rot</string>
+    <string name="facil">Fácil</string>
+    <string name="medio">Médio</string>
+    <string name="dificil">Difícil</string>
 </resources>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="#000000"
+    android:background="#00FA9A"
 
     android:gravity="center">
 
@@ -14,25 +14,48 @@
         android:id="@+id/gridboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         />
 
-    <Button
-        android:id="@+id/btnEsquerda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/esq" />
 
-    <Button
-        android:id="@+id/btnDireita"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dir" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/btnEsquerda"
+            android:layout_width="71dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/esquerda" />
 
-    <Button
-        android:id="@+id/btnRotacionar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rot" />
+        <ImageView
+            android:id="@+id/btnDireita"
+            android:layout_width="71dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/direita" />
+
+        <ImageView
+            android:id="@+id/btnRotacionar"
+            android:layout_width="71dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/rotacionar" />
+
+
+    </LinearLayout>
+
 
 
 </LinearLayout>
