@@ -2,4 +2,7 @@
     <string name="app_name">GameTetris</string>
     <string name="configurar">Configurar</string>
     <string name="novo_jogo">Novo Jogo</string>
+    <string name="esq">Esq</string>
+    <string name="dir">Dir</string>
+    <string name="rot">Rot</string>
 </resources>

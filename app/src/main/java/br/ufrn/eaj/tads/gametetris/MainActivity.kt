@@ -24,12 +24,8 @@ class MainActivity : AppCompatActivity() {
     var running = true
     var speed:Long = 300
 
-    var pt = T(3,15)
+    var pt = I(3,15)
 
-
-
-
-    //val board = Array(LINHA, { IntArray(COLUNA) })
 
     var board = Array(LINHA) {
         Array(COLUNA){0}
@@ -56,6 +52,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         gameRun()
+
+        btnDireita.setOnClickListener {
+            pt.moveRight()
+        }
+        btnEsquerda.setOnClickListener {
+            pt.moveLeft()
+        }
+        btnRotacionar.setOnClickListener {
+            pt.moveRotate()
+        }
     }
 
     fun gameRun(){
@@ -71,9 +77,11 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    //move peça atual
-                    pt.moveDown()
-                    //print peça
+
+
+                        pt.moveDown()
+
+
 
                     try {
 
@@ -104,12 +112,16 @@ class MainActivity : AppCompatActivity() {
                             }
 */
                     }catch (e:ArrayIndexOutOfBoundsException ) {
-                        //se a peça passou das bordas eu vou parar o jogo
-                        running = false
+
                     }
 
                 }
             }
         }.start()
     }
+
+
+
 }
+
+

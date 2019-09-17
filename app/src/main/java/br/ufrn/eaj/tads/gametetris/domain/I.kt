@@ -48,49 +48,39 @@ class I(line:Int,column:Int) :Piece(line, column){
 
 
     override fun moveRotate() {
-//fleck ==1 centro
-        //fleck ==2 direita fleck ==3 esquerda
+        //fleck ==1 centro
+        //fleck ==2 direita
+        /*
+           *       |D|
+           *       |A|
+           *       |B|  ----> |C| |B| |A| |D|
+           *       |C|
+           *
+           * */
+        if (fleck==1){
+                pointB.line= pointA.line
+                pointB.column=pointA.column -1
 
-        when (fleck) {
+                pointC.line=pointA.line
+                pointC.column=pointA.column - 2
 
-            1 -> {
-                pointB.line = pointA.line
-                pointB.column = pointA.column + 1
-
-                pointC.line = pointA.line
-                pointC.column = pointA.column + 2
-
-                pointD.line = pointA.line + 1
-                pointD.column = pointA.column
+                pointD.line=pointA.line
+                pointD.column=pointA.column+1
 
                 fleck = 2
 
-            }
-            2 -> {
-                pointB.line = pointA.line - 1
-                pointB.column = pointA.column
+            }else{
+                pointB.line=pointA.line +1
+                pointB.column= pointA.column
 
-                pointC.line = pointA.line - 2
-                pointC.column = pointA.column
+                pointC.line= pointA.line +2
+                pointC.column= pointA.column
 
-                pointD.line = pointA.line
-                pointD.column = pointA.column + 1
+                pointD.line= pointA.line-1
+                pointD.column= pointA.column
 
                 fleck = 1
 
             }
-            3 -> {
-                pointB.line = pointA.line
-                pointB.column = pointA.column - 1
-
-                pointC.line = pointA.line
-                pointC.column = pointA.column - 2
-
-                pointD.line = pointA.line - 1
-                pointD.column = pointA.column + 1
-
-
-            }
-        }
     }
 }

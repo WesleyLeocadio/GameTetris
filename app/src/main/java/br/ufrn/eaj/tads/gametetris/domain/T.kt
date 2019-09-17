@@ -46,5 +46,41 @@ class T(line:Int,column:Int) :Piece(line, column) {
         pointC.moveLeft()
         pointD.moveLeft()
     }
-    override fun moveRotate() {}
+    override fun moveRotate() {
+/*
+   *
+   *       |D|             |C|
+   *   |C| |A| |B| ----->  |A| |D|
+   *                       |B|
+   *
+   * */
+
+        if (fleck==1){
+            pointB.line= pointA.line+1
+            pointB.column=pointA.column
+
+            pointC.line=pointA.line-1
+            pointC.column=pointA.column
+
+            pointD.line=pointA.line
+            pointD.column=pointA.column+1
+
+            fleck = 2
+
+        }else{
+            pointB.line=pointA.line
+            pointB.column= pointA.column+1
+
+            pointC.line= pointA.line
+            pointC.column= pointA.column-1
+
+            pointD.line= pointA.line-1
+            pointD.column= pointA.column
+
+            fleck = 1
+
+        }
+
+
+    }
 }

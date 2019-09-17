@@ -16,5 +16,23 @@
         android:layout_height="wrap_content"
         />
 
+    <Button
+        android:id="@+id/btnEsquerda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/esq" />
+
+    <Button
+        android:id="@+id/btnDireita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dir" />
+
+    <Button
+        android:id="@+id/btnRotacionar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rot" />
+
 
 </LinearLayout>
