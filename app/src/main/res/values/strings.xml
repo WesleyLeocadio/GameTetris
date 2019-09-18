@@ -8,4 +8,5 @@
     <string name="facil">Fácil</string>
     <string name="medio">Médio</string>
     <string name="dificil">Difícil</string>
+    <string name="rotacionar">Rotacionar</string>
 </resources>

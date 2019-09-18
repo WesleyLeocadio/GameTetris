@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     var running = true
     var speed:Long = 300
 
-    var pt = I(3,15)
+    var pt = L(3,15)
 
 
     var board = Array(LINHA) {
@@ -54,10 +54,26 @@ class MainActivity : AppCompatActivity() {
         gameRun()
 
         btnDireita.setOnClickListener {
-            pt.moveRight()
+            try {
+                if((board[pt.pointA.line][pt.pointA.column+1] == 0) && (board[pt.pointB.line][pt.pointB.column+1] == 0)
+                    && (board[pt.pointC.line][pt.pointC.column+1] == 0) && (board[pt.pointD.line][pt.pointD.column+1] == 0)) {//bateu no lado direito
+                    pt.moveRight()
+                }
+            }catch (e:ArrayIndexOutOfBoundsException){
+                Log.i("ERRO","Bateu direita")
+            }
         }
         btnEsquerda.setOnClickListener {
-            pt.moveLeft()
+            try {
+                if((board[pt.pointA.line][pt.pointA.column-1] == 0) && (board[pt.pointB.line][pt.pointB.column-1] == 0)
+                    && (board[pt.pointC.line][pt.pointC.column-1] == 0) && (board[pt.pointD.line][pt.pointD.column-1] == 0)) {//bateu no lado direito
+                    pt.moveLeft()
+                }
+            }catch (e:ArrayIndexOutOfBoundsException){
+
+                Log.i("ERRO","Bateu esquerda")
+            }
+
         }
         btnRotacionar.setOnClickListener {
             pt.moveRotate()
@@ -78,39 +94,26 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
 
+                    if(pt.pointC.line< LINHA-1 && pt.pointD.line< LINHA-1 && pt.pointA.line< LINHA-1&&pt.pointB.line< LINHA-1){
+                        if((board[pt.pointA.line+1][pt.pointA.column]== 1)||(board[pt.pointB.line+1][pt.pointB.column]== 1)||(board[pt.pointC.line+1][pt.pointC.column]== 1)||(board[pt.pointD.line+1][pt.pointD.column]== 1)) {
+                            setBoard()
+                            setBoardView()
+                            novaPieca()
+                        }else{
+                            pt.moveDown()
+                        }
 
-                        pt.moveDown()
-
-
+                    }else{
+                        setBoard()
+                        setBoardView()
+                        novaPieca()
+                    }
 
                     try {
 
-                        boardView[pt.pointA.line][pt.pointA.column]!!.setImageResource(R.drawable.green)
-                        boardView[pt.pointB.line][pt.pointB.column]!!.setImageResource(R.drawable.green)
-                        boardView[pt.pointC.line][pt.pointC.column]!!.setImageResource(R.drawable.green)
-                        boardView[pt.pointD.line][pt.pointD.column]!!.setImageResource(R.drawable.green)
-                     /*       when(pt.color){
-                                1->{
-                                    boardView[pt.pointA.line][pt.pointA.column]!!.setImageResource(R.drawable.green)
-                                    boardView[pt.pointB.line][pt.pointB.column]!!.setImageResource(R.drawable.green)
-                                    boardView[pt.pointC.line][pt.pointC.column]!!.setImageResource(R.drawable.green)
-                                    boardView[pt.pointD.line][pt.pointD.column]!!.setImageResource(R.drawable.green)
-                                }
-                                2->{
-                                    boardView[pt.pointA.line][pt.pointA.column]!!.setImageResource(R.drawable.black)
-                                    boardView[pt.pointB.line][pt.pointB.column]!!.setImageResource(R.drawable.black)
-                                    boardView[pt.pointC.line][pt.pointC.column]!!.setImageResource(R.drawable.black)
-                                    boardView[pt.pointD.line][pt.pointD.column]!!.setImageResource(R.drawable.black)
-                                }
-                                3->{
-                                    boardView[pt.pointA.line][pt.pointA.column]!!.setImageResource(R.drawable.gray)
-                                    boardView[pt.pointB.line][pt.pointB.column]!!.setImageResource(R.drawable.gray)
-                                    boardView[pt.pointC.line][pt.pointC.column]!!.setImageResource(R.drawable.gray)
-                                    boardView[pt.pointD.line][pt.pointD.column]!!.setImageResource(R.drawable.gray)
-                                }
+                      setBoardView()
 
-                            }
-*/
+
                     }catch (e:ArrayIndexOutOfBoundsException ) {
 
                     }
@@ -118,6 +121,29 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }.start()
+    }
+
+
+
+    fun setBoard(){
+        board[pt.pointA.line][pt.pointA.column]=1
+        board[pt.pointB.line][pt.pointB.column]=1
+        board[pt.pointC.line][pt.pointC.column]=1
+        board[pt.pointD.line][pt.pointD.column]=1
+
+    }
+
+    fun setBoardView(){
+        boardView[pt.pointA.line][pt.pointA.column]!!.setImageResource(R.drawable.green)
+        boardView[pt.pointB.line][pt.pointB.column]!!.setImageResource(R.drawable.green)
+        boardView[pt.pointC.line][pt.pointC.column]!!.setImageResource(R.drawable.green)
+        boardView[pt.pointD.line][pt.pointD.column]!!.setImageResource(R.drawable.green)
+
+    }
+
+    fun novaPieca(){
+        pt = L(3,17)
+
     }
 
 
