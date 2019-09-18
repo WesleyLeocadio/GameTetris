@@ -10,11 +10,8 @@ import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import br.ufrn.eaj.tads.gametetris.domain.I
-import br.ufrn.eaj.tads.gametetris.domain.L
-import br.ufrn.eaj.tads.gametetris.domain.O
-import br.ufrn.eaj.tads.gametetris.domain.S
-import br.ufrn.eaj.tads.gametetris.domain.T
+import br.ufrn.eaj.tads.gametetris.domain.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,9 +19,10 @@ class MainActivity : AppCompatActivity() {
     val LINHA = 36
     val COLUNA = 26
     var running = true
-    var speed:Long = 300
+    var speed:Long = 500
 
-    var pt = L(3,15)
+    var pt:Piece = L(3,15)
+
 
 
     var board = Array(LINHA) {
@@ -124,6 +122,12 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    fun createRadom_Peça(): Int {
+        val r = Random()
+        val aleatorio = r.nextInt(5)
+        Log.i("random", "Número random: $aleatorio")
+        return aleatorio
+    }
 
     fun setBoard(){
         board[pt.pointA.line][pt.pointA.column]=1
@@ -142,8 +146,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun novaPieca(){
-        pt = L(3,17)
 
+        var novaPeca= createRadom_Peça()
+        Log.i("Radom", "number: $novaPeca")
+
+        if(novaPeca==0) {
+            pt = L(3, 17)
+        }else if(novaPeca==1){
+            pt =I(3,15)
+
+        }else if(novaPeca==2){
+            pt =O(3,15)
+
+        }else if(novaPeca==3){
+            pt =T(3,15)
+
+        }else{
+            pt =S(3,15)
+        }
     }
 
 
