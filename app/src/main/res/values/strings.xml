@@ -9,4 +9,8 @@
     <string name="medio">Médio</string>
     <string name="dificil">Difícil</string>
     <string name="rotacionar">Rotacionar</string>
+    <string name="_2">2</string>
+    <string name="_4">4</string>
+    <string name="_7">7</string>
+    <string name="configuracoes">Configurações:</string>
 </resources>

@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     val LINHA = 36
     val COLUNA = 26
     var running = true
-    var speed:Long = 500
+    var speed:Long = 200
 
     var pt:Piece = L(3,15)
 
@@ -108,10 +108,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     try {
-
                       setBoardView()
-
-
                     }catch (e:ArrayIndexOutOfBoundsException ) {
 
                     }
@@ -164,6 +161,10 @@ class MainActivity : AppCompatActivity() {
         }else{
             pt =S(3,15)
         }
+    }
+    fun verificar_linha(){
+
+
     }
 
 
