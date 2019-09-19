@@ -9,7 +9,7 @@ class O(line:Int,column:Int) :Piece(line, column) {
 
     }
 
-    override var color: Int=2
+    override var cod: Int=0
 
     override fun moveTop(){
         pointA.moveTop()

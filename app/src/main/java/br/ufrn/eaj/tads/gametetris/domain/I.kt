@@ -15,7 +15,7 @@ class I(line:Int,column:Int) :Piece(line, column){
         pointD = Point(line-1,column)
     }
 
-    override var color: Int=3
+    override var cod: Int=1
 
     override fun moveTop(){
         pointA.moveTop()

@@ -14,7 +14,7 @@ abstract class Piece(var line:Int, var column:Int){
     abstract fun moveLeft()
     abstract  fun moveRotate()
 
-    abstract var color:Int
+    abstract var cod:Int
      var fleck:Int=1
 
 

@@ -8,7 +8,7 @@ class L(line:Int,column:Int) :Piece(line, column){
         pointD = Point(line,column+1)
     }
 
-    override var color: Int=1
+    override var cod: Int=1
 
     override fun moveTop(){
         pointA.moveTop()
