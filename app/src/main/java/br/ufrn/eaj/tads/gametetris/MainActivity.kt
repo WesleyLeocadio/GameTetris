@@ -1,5 +1,6 @@
 package br.ufrn.eaj.tads.gametetris
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,9 @@ class MainActivity : AppCompatActivity() {
     var running = true
     var speed: Long = 250
 
+    var groupRadio=0
+    var escolhido=0
+
     var pt: Piece = I(0, 6)
 
 
@@ -37,6 +41,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val settings = getSharedPreferences("Wesley", Context.MODE_PRIVATE)
+        groupRadio = settings.getInt("selecionado", 0)
+        escolhido = settings.getInt("velocidade", 0)
+             speed=escolhido.toLong()
+        Log.i("erro", " NOVO -> grupo 0${groupRadio} escolhido ${escolhido} ")
+
 
         gridboard.rowCount = LINHA
         gridboard.columnCount = COLUNA
