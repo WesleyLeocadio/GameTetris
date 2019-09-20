@@ -10,6 +10,7 @@ import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.widget.Toast
 import br.ufrn.eaj.tads.gametetris.domain.*
 import java.util.*
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     var running = true
     var speed: Long = 250
 
-    var pt: Piece = I(3, 6)
+    var pt: Piece = I(0, 6)
 
 
     var board = Array(LINHA) {
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 gridboard.addView(boardView[i][j])
             }
         }
+
 
         gameRun()
 
@@ -85,30 +87,36 @@ class MainActivity : AppCompatActivity() {
                         pt.moveRotate()
                     }
                 } else {
-                    if ((board[pt.pointA.line][pt.pointA.column - 2] == 0) && (board[pt.pointB.line][pt.pointB.column - 2] == 0)
-                        && (board[pt.pointC.line][pt.pointC.column - 2] == 0) && (board[pt.pointD.line][pt.pointD.column - 2] == 0) && (board[pt.pointA.line][pt.pointA.column + 2] == 0)
-                        && (board[pt.pointB.line][pt.pointB.column + 2] == 0) &&
-                        (board[pt.pointC.line][pt.pointC.column + 2] == 0) && (board[pt.pointD.line][pt.pointD.column + 2] == 0)
-                    ) {//bateu no lado direito
-
-                        if ((board[pt.pointA.line][pt.pointA.column - 1] == 0) && (board[pt.pointB.line][pt.pointB.column - 1] == 0)
-                            && (board[pt.pointC.line][pt.pointC.column - 1] == 0) && (board[pt.pointD.line][pt.pointD.column - 1] == 0) && (board[pt.pointA.line][pt.pointA.column + 1] == 0)
-                            && (board[pt.pointB.line][pt.pointB.column + 1] == 0) &&
-                            (board[pt.pointC.line][pt.pointC.column + 1] == 0) && (board[pt.pointD.line][pt.pointD.column + 1] == 0)
+                    if (pt.fleck == 1) {
+                        if ((board[pt.pointA.line][pt.pointA.column - 2] == 0) && (board[pt.pointB.line][pt.pointB.column - 2] == 0)
+                            && (board[pt.pointC.line][pt.pointC.column - 2] == 0) && (board[pt.pointD.line][pt.pointD.column - 2] == 0) && (board[pt.pointA.line][pt.pointA.column + 2] == 0)
+                            && (board[pt.pointB.line][pt.pointB.column + 2] == 0) &&
+                            (board[pt.pointC.line][pt.pointC.column + 2] == 0) && (board[pt.pointD.line][pt.pointD.column + 2] == 0)
                         ) {
 
-                            //linha
-                            if ((board[pt.pointA.line + 2][pt.pointA.column] == 0) && (board[pt.pointB.line + 2][pt.pointB.column] == 0)
-                                && (board[pt.pointC.line + 2][pt.pointC.column] == 0) && (board[pt.pointD.line + 2][pt.pointD.column] == 0)
-                            ) {//bateu no lado direito
+                            if ((board[pt.pointA.line][pt.pointA.column - 1] == 0) && (board[pt.pointB.line][pt.pointB.column - 1] == 0)
+                                && (board[pt.pointC.line][pt.pointC.column - 1] == 0) && (board[pt.pointD.line][pt.pointD.column - 1] == 0) && (board[pt.pointA.line][pt.pointA.column + 1] == 0)
+                                && (board[pt.pointB.line][pt.pointB.column + 1] == 0) &&
+                                (board[pt.pointC.line][pt.pointC.column + 1] == 0) && (board[pt.pointD.line][pt.pointD.column + 1] == 0)
+                            ) {
 
-                                if ((board[pt.pointA.line + 1][pt.pointA.column] == 0) && (board[pt.pointB.line + 1][pt.pointB.column] == 0)
-                                    && (board[pt.pointC.line + 1][pt.pointC.column] == 0) && (board[pt.pointD.line + 1][pt.pointD.column] == 0)
-                                ) {
-                                    pt.moveRotate()
+                                //linha
+                                if ((board[pt.pointA.line + 2][pt.pointA.column] == 0) && (board[pt.pointB.line + 2][pt.pointB.column] == 0)
+                                    && (board[pt.pointC.line + 2][pt.pointC.column] == 0) && (board[pt.pointD.line + 2][pt.pointD.column] == 0)
+                                ) {//bateu no lado direito
+
+                                    if ((board[pt.pointA.line + 1][pt.pointA.column] == 0) && (board[pt.pointB.line + 1][pt.pointB.column] == 0)
+                                        && (board[pt.pointC.line + 1][pt.pointC.column] == 0) && (board[pt.pointD.line + 1][pt.pointD.column] == 0)
+                                    ) {
+                                        pt.moveRotate()
+                                    }
                                 }
                             }
                         }
+                    } else {
+                        pt.moveRotate()
+
+
                     }
                 }
             } catch (e: ArrayIndexOutOfBoundsException) {
@@ -143,6 +151,7 @@ class MainActivity : AppCompatActivity() {
                             setBoard()
                             setBoardView()
                             identificarLinha()
+                            gameOver()
                             novaPieca()
                         } else {
                             pt.moveDown()
@@ -152,7 +161,7 @@ class MainActivity : AppCompatActivity() {
                         setBoard()
                         setBoardView()
                         identificarLinha()
-
+                        gameOver()
                         novaPieca()
                     }
 
@@ -169,10 +178,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun removeLinha(i: Int) {
-
         for (j in 0 until COLUNA) {
             board[i][j] = 0
-//            boardView[i][j]!!.setImageResource(R.drawable.black)
         }
         for (linha in i downTo 1) {
             for (coluna in COLUNA - 1 downTo 0) {
@@ -210,18 +217,29 @@ class MainActivity : AppCompatActivity() {
                 removeLinha(i)
 
             }
-            cont = 0
-            for (d in COLUNA - 1 downTo 0) {
-                if (board[i][d] == 1) {
-                    cont++
-                }
 
-            }
-            if (cont == COLUNA) {
+            while (verificandoUltimaLinha(i)) {
                 removeLinha(i)
-
             }
         }
+    }
+
+    fun verificandoUltimaLinha(x: Int): Boolean {
+
+        var cont = 0
+        for (d in COLUNA - 1 downTo 0) {
+            if (board[x][d] == 1) {
+                cont++
+            }
+
+        }
+        if (cont == COLUNA) {
+            return true
+
+
+        }
+        return false
+
     }
 
     fun createRadom_Peça(): Int {
@@ -247,8 +265,22 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun gameOver() {
+        var cont = 0
+        for (i in 0 until COLUNA) {
+
+            if (board[0][i] == 1) {
+                Toast.makeText(this, "GAME OVER", Toast.LENGTH_LONG).show()
+                break
+            }
+
+
+        }
+
+    }
+
     fun novaPieca() {
-        pt = I(3, 6)
+        pt = I(0, 6)
 
 //        var novaPeca= createRadom_Peça()
 //        Log.i("Radom", "number: $novaPeca")
