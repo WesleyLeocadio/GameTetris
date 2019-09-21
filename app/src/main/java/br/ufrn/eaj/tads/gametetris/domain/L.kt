@@ -1,8 +1,9 @@
 package br.ufrn.eaj.tads.gametetris.domain
 
-class L(line:Int,column:Int) :Piece(line, column){
+class L(line:Int, column:Int) :Piece(line, column){
 
     init {
+        id=2
         pointB = Point(line-1,column)
         pointC = Point(line-2,column)
         pointD = Point(line,column+1)

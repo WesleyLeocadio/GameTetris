@@ -14,4 +14,7 @@
     <string name="_7">7</string>
     <string name="configuracoes">Configurações:</string>
     <string name="pontuacao">Pontuação</string>
+    <string name="proxima">Próxima</string>
+    <string name="baixo">Baixo</string>
+    <string name="pause">Pause</string>
 </resources>

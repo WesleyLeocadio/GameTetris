@@ -6,21 +6,89 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="#00FA9A"
+    android:background="#011F27"
 
     android:gravity="center">
 
-    <GridLayout
-        android:id="@+id/gridboard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        />
+
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="57dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp"
+        android:layout_marginTop="40sp">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="@string/pontuacao"
+            android:textSize="24dp"
+            />
+
+        <TextView
+            android:id="@+id/textPontos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="24dp"
+            android:layout_marginLeft="5sp"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="@string/proxima"
+            android:textSize="24dp"
+            android:layout_marginLeft="50sp"/>
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="60sp"
+            android:layout_marginLeft="5sp">
+        </GridLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/btnPause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="@string/pause" />
+        <GridLayout
+            android:id="@+id/gridboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="60sp"
+            android:layout_marginLeft="20sp">
+
+        </GridLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="129dp"
+        android:layout_marginHorizontal="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10sp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -29,22 +97,38 @@
             android:id="@+id/btnEsquerda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:layout_weight="1"
             android:text="@string/esq" />
+
+        <Button
+            android:id="@+id/btnBaixo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+
+            android:text="@string/baixo" />
 
         <Button
             android:id="@+id/btnDireita"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:layout_weight="1"
             android:text="@string/dir" />
+
+
+        <Button
+            android:id="@+id/btnRotacionar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50sp"
+
+            android:text="@string/rotacionar" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnRotacionar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/rotacionar" />
+
 
 
 </LinearLayout>

@@ -7,9 +7,10 @@ package br.ufrn.eaj.tads.gametetris.domain
    *
    * */
 
-class S(line:Int,column:Int) :Piece(line, column) {
+class S(line:Int, column:Int) :Piece(line, column) {
 
     init {
+        id=4
         pointB = Point(line-1,column)
         pointC = Point(line-1,column+1)
         pointD = Point(line,column-1)

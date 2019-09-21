@@ -1,6 +1,6 @@
 package br.ufrn.eaj.tads.gametetris.domain
 
-class I(line:Int,column:Int) :Piece(line, column){
+class I(line:Int, column:Int) :Piece(line, column){
     /*
     *       |D|
     *       |A|
@@ -10,6 +10,7 @@ class I(line:Int,column:Int) :Piece(line, column){
     * */
 
     init {
+        id=1
         pointB = Point(line+1,column)
         pointC = Point(line+2,column)
         pointD = Point(line-1,column)

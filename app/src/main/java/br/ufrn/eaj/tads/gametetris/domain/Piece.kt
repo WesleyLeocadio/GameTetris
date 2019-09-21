@@ -16,6 +16,7 @@ abstract class Piece(var line:Int, var column:Int){
 
     abstract var cod:Int
      var fleck:Int=1
+     var id:Int=1
 
 
 
