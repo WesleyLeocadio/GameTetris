@@ -15,6 +15,7 @@ class StartActivity : AppCompatActivity(),View.OnClickListener {
 
         btnComecarJogo.setOnClickListener(this)
         btnConfiguracoes.setOnClickListener(this)
+        btnResultado.setOnClickListener(this)
 
     }
 
@@ -28,6 +29,11 @@ class StartActivity : AppCompatActivity(),View.OnClickListener {
             }
             btnConfiguracoes.id->{
                 var i = Intent(this, ConfiguracaoActivity::class.java)
+                startActivity(i)
+
+            }
+            btnResultado.id->{
+                var i = Intent(this, ResultadoActivity::class.java)
                 startActivity(i)
 
             }

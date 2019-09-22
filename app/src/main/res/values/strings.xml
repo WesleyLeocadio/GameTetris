@@ -9,12 +9,12 @@
     <string name="medio">Médio</string>
     <string name="dificil">Difícil</string>
     <string name="rotacionar">Rotacionar</string>
-    <string name="_2">2</string>
-    <string name="_4">4</string>
-    <string name="_7">7</string>
     <string name="configuracoes">Configurações:</string>
     <string name="pontuacao">Pontuação</string>
     <string name="proxima">Próxima</string>
     <string name="baixo">Baixo</string>
     <string name="pause">Pause</string>
+    <string name="texto_conf">Selecione o nível do jogo</string>
+    <string name="semValor">---</string>
+    <string name="resultados">Resultados</string>
 </resources>

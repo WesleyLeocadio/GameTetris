@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GameTetris</string>
+    <string name="configuracoes">Settings</string>
+    <string name="facil">Easy</string>
+    <string name="medio">"Medium "</string>
+    <string name="dificil">Hard</string>
+    <string name="proxima">Next</string>
+    <string name="pontuacao">"Punctuation "</string>
+    <string name="texto_conf">"Select game level "</string>
+    <string name="novo_jogo">New Game</string>
+    <string name="configurar">Settings</string>
+</resources>

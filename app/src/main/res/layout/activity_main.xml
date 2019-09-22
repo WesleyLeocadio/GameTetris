@@ -26,25 +26,26 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:text="@string/pontuacao"
-            android:textSize="24dp"
-            />
+            android:textColor="#ffffff"
+            android:textSize="24dp" />
 
         <TextView
             android:id="@+id/textPontos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="24dp"
             android:layout_marginLeft="5sp"
-             />
+            android:text="0"
+            android:textColor="#ffffff"
+            android:textSize="24dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:layout_marginLeft="50sp"
             android:text="@string/proxima"
-            android:textSize="24dp"
-            android:layout_marginLeft="50sp"/>
+            android:textColor="#ffffff"
+            android:textSize="24dp" />
 
 
         <GridLayout
@@ -62,19 +63,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp">
 
-        <Button
+
+        <ImageButton
             android:id="@+id/btnPause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:srcCompat="@drawable/stop"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="10sp"
             android:layout_gravity="top"
-            android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:text="@string/pause" />
+            android:background="#011F27"/>
+
         <GridLayout
             android:id="@+id/gridboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="right"
             android:layout_marginRight="60sp"
             android:layout_marginLeft="20sp">
 
@@ -92,40 +97,52 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-
-        <Button
+        <ImageButton
             android:id="@+id/btnEsquerda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:srcCompat="@drawable/esq"
+            android:layout_marginLeft="10sp"
             android:layout_gravity="top"
             android:layout_weight="1"
-            android:text="@string/esq" />
+            android:background="#011F27"/>
 
-        <Button
+
+        <ImageButton
             android:id="@+id/btnBaixo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:srcCompat="@drawable/bai"
             android:layout_marginTop="20dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+
+
             android:layout_weight="1"
+            android:background="#011F27"/>
 
-            android:text="@string/baixo" />
 
-        <Button
+
+        <ImageButton
             android:id="@+id/btnDireita"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
+            app:srcCompat="@drawable/dir"
             android:layout_weight="1"
-            android:text="@string/dir" />
+            android:background="#011F27"/>
 
-
-        <Button
+        <ImageButton
             android:id="@+id/btnRotacionar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:srcCompat="@drawable/rot"
             android:layout_marginLeft="50sp"
+            android:background="#011F27"/>
 
-            android:text="@string/rotacionar" />
+
+
+
     </LinearLayout>
 
 

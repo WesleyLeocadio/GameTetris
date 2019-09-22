@@ -19,8 +19,8 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     //36
     //26
-    val LINHA = 26
-    val COLUNA = 16
+    val LINHA = 28
+    val COLUNA = 20
     var running = true
     var speed: Long = 250
     var pontos = 0
@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     var groupRadio = 0
     var escolhido = 0
 
+    var pause =0
     var pt: Piece = I(0, COLUNA/2)
 
 
@@ -89,6 +90,37 @@ class MainActivity : AppCompatActivity() {
                 Log.i("ERRO", "Bateu esquerda")
             }
 
+        }
+
+        btnPause.setOnClickListener {
+
+            if(pause==0){
+                running = false
+                pause=1
+                Log.i("ERR", "paudado")
+
+            }else{
+                running = true
+                pause=0
+                gameRun()
+                Log.i("ERR", "desbloqueou")
+
+
+
+            }
+        }
+
+        btnBaixo.setOnClickListener {
+            try {
+                if ((board[pt.pointA.line+1][pt.pointA.column] == 0) && (board[pt.pointB.line+1][pt.pointB.column] == 0)
+                    && (board[pt.pointC.line+1][pt.pointC.column] == 0) && (board[pt.pointD.line+1][pt.pointD.column ] == 0)
+                ) {//bateu no lado direito
+                    pt.moveDown()
+                }
+            } catch (e: ArrayIndexOutOfBoundsException) {
+
+                Log.i("ERRO", "Bateu esquerda")
+            }
         }
         btnRotacionar.setOnClickListener {
             try {

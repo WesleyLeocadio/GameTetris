@@ -39,7 +39,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:text="Selecione o nível do jogo"
+        android:text="@string/texto_conf"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/radiogroupnivel"
@@ -63,7 +63,6 @@
             android:id="@+id/radioFacil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:text="@string/facil"
             android:textSize="18sp" />
 
@@ -73,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/medio"
+            android:checked="true"
             android:textSize="18sp" />
 
         <RadioButton
