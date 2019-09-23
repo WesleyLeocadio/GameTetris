@@ -1,6 +1,6 @@
 package br.ufrn.eaj.tads.gametetris
-
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +14,6 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.widget.Toast
 import br.ufrn.eaj.tads.gametetris.domain.*
 import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
     //36
@@ -50,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         speed = escolhido.toLong()
         Log.i("erro", " NOVO -> grupo 0${groupRadio} escolhido ${escolhido} ")
 
-
         gridboard.rowCount = LINHA
         gridboard.columnCount = COLUNA
 
@@ -64,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         gameRun()
 
         btnDireita.setOnClickListener {
@@ -75,7 +72,6 @@ class MainActivity : AppCompatActivity() {
                     pt.moveRight()
                 }
             } catch (e: ArrayIndexOutOfBoundsException) {
-                Log.i("ERRO", "Bateu direita")
             }
         }
         btnEsquerda.setOnClickListener {
@@ -87,26 +83,17 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: ArrayIndexOutOfBoundsException) {
 
-                Log.i("ERRO", "Bateu esquerda")
             }
-
         }
 
         btnPause.setOnClickListener {
-
             if(pause==0){
                 running = false
                 pause=1
-                Log.i("ERR", "paudado")
-
-            }else{
+            }else {
                 running = true
-                pause=0
+                pause = 0
                 gameRun()
-                Log.i("ERR", "desbloqueou")
-
-
-
             }
         }
 
@@ -126,7 +113,12 @@ class MainActivity : AppCompatActivity() {
             try {
                 if (pt.cod == 0) {
                     if ((board[pt.pointA.line + 1][pt.pointA.column] == 0) && (board[pt.pointB.line + 1][pt.pointB.column] == 0) && (board[pt.pointC.line + 1][pt.pointC.column] == 0) && (board[pt.pointD.line + 1][pt.pointD.column] == 0)) {
+
+                        if ((board[pt.pointA.line][pt.pointA.column - 1] == 0) && (board[pt.pointB.line][pt.pointB.column - 1] == 0)
+                            && (board[pt.pointC.line][pt.pointC.column - 1] == 0) && (board[pt.pointD.line][pt.pointD.column - 1] == 0)
+                        ) {
                         pt.moveRotate()
+                        }
                     }
                 } else {
                     if (pt.fleck == 1) {
@@ -191,9 +183,10 @@ class MainActivity : AppCompatActivity() {
                         setBoard()
                         setBoardView()
                         identificarLinha()
-                        gameOver()
-                        novaPieca()
-                    }
+
+                            novaPieca()
+
+                        }
 
                     try {
                         setBoardView()
@@ -236,14 +229,12 @@ class MainActivity : AppCompatActivity() {
                     cont++
                 }
             }
-            if (cont == COLUNA) {
-                removeLinha(i)
-            }
-            while (verificandoUltimaLinha(i)) {
-                removeLinha(i)
-            }
+            if (cont == COLUNA) { removeLinha(i)}
+            while (verificandoUltimaLinha(i)) { removeLinha(i) }
+
         }
     }
+
 
     fun verificandoUltimaLinha(x: Int): Boolean {
         var cont = 0
@@ -252,17 +243,11 @@ class MainActivity : AppCompatActivity() {
                 cont++
             }
         }
-        if(cont == COLUNA) {
-            return true
-        }
+        if(cont == COLUNA) { return true }
         return false
     }
 
-    fun createRadom_Peça(): Int {
-        val aleatorio = kotlin.random.Random.nextInt(0, 4)
-        Log.i("random", "Número random: $aleatorio")
-        return aleatorio
-    }
+    fun createRadom_Peça(): Int =kotlin.random.Random.nextInt(0, 4)
 
     fun setBoard() {
         board[pt.pointA.line][pt.pointA.column] = 1
@@ -278,52 +263,65 @@ class MainActivity : AppCompatActivity() {
         boardView[pt.pointD.line][pt.pointD.column]!!.setImageResource(getCor(pt.id))
     }
 
-    fun gameOver() {
-        var cont = 0
+    fun gameOver(){
         for (i in 0 until COLUNA) {
-            if (board[0][i] == 1) {
-                Toast.makeText(this, "GAME OVER", Toast.LENGTH_LONG).show()
+            if (board[3][i] == 1) {
+                running=false
+                pontuacaoMaxima()
+                var i = Intent(this,ResultadoActivity::class.java)
+                var mensagem =textPontos.text.toString()
+                var b = Bundle()
+                b.putString("PONTUACAO", mensagem)
+                i.putExtras(b)
+                startActivity(i)
+                finish()
                 break
             }
+
         }
+
+    }
+
+    fun pontuacaoMaxima() {
+        val settings = getSharedPreferences("Wesley", Context.MODE_PRIVATE)
+        var editor = settings.edit()
+        var score = settings.getInt("SCORE", 0)
+
+        if(score<textPontos.text.toString().toInt()){
+            editor.putInt("SCORE", Integer.parseInt(textPontos.text.toString()))
+            editor.commit()
+        }
+
+
+
     }
 
     fun getCor(id: Int): Int {
         return when (id) {
-            0 -> {
-                R.drawable.azul
-            }
-            1 -> {
-                R.drawable.amarelo
-            }
-            2 -> {
-                R.drawable.vermelho
-            }
-            3 -> {
-                R.drawable.verde
-            }
-            else -> {
-                R.drawable.azul
-            }
+            0 -> { R.drawable.azul }
+            1 -> { R.drawable.amarelo }
+            2 -> { R.drawable.vermelho }
+            3 -> { R.drawable.verde }
+            else -> { R.drawable.azul }
         }
     }
 
     fun novaPieca() {
+        gameOver()
         var novaPeca = createRadom_Peça()
-        if (novaPeca == 0) {
-            pt = L(3, COLUNA / 2)
-        } else if (novaPeca == 1) {
-            pt = I(3, COLUNA / 2)
+//        if (novaPeca == 0) {
+//            pt = L(1, COLUNA / 2)
+//        } else if (novaPeca == 1) {
+            pt = I(1, COLUNA / 2)
 
-        } else if (novaPeca == 2) {
-            pt = O(3, COLUNA / 2)
-
-        } else if (novaPeca == 3) {
-            pt = T(3, COLUNA / 2)
-
-        } else {
-            pt = S(3, COLUNA / 2)
-        }
-    }
-
+//        } else if (novaPeca == 2) {
+//            pt = O(1, COLUNA / 2)
+//
+//        } else if (novaPeca == 3) {
+//            pt = T(1, COLUNA / 2)
+//
+//        } else {
+//            pt = S(1, COLUNA / 2)
+//        }
+   }
 }
