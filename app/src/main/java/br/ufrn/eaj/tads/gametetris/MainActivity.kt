@@ -9,15 +9,13 @@ import android.util.Log
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.LayoutInflater
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.view.View
-import android.widget.Toast
+
 import androidx.lifecycle.ViewModelProviders
 import br.ufrn.eaj.tads.gametetris.domain.*
 import java.util.*
+import kotlin.random.Random
+
+
 
 class MainActivity : AppCompatActivity() {
     //36
@@ -28,16 +26,16 @@ class MainActivity : AppCompatActivity() {
     var speed: Long = 250
     var pontos = 0
 
-    var groupRadio = 0
+
+    var proxPeca = 1
     var escolhido = 0
+    var random = Random
 
     var pause = 0
     var pt: Piece = I(0, COLUNA / 2)
 
 
-    var boardViewNovaPeca = Array(4) {
-        arrayOfNulls<ImageView>(4)
-    }
+
 
     var boardView = Array(LINHA) {
         arrayOfNulls<ImageView>(COLUNA)
@@ -59,8 +57,7 @@ class MainActivity : AppCompatActivity() {
         gridboard.rowCount = LINHA
         gridboard.columnCount = COLUNA
 
-        proximaPeca.rowCount = 4
-        proximaPeca.columnCount = 4
+
 
 
         val inflater = LayoutInflater.from(this)
@@ -73,13 +70,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        for (i in 0 until 4) {
-            for (j in 0 until 4) {
-                boardViewNovaPeca[i][j] =
-                    inflater.inflate(R.layout.inflate_image_view, proximaPeca, false) as ImageView
-                proximaPeca.addView(boardViewNovaPeca[i][j])
-            }
-        }
+
 
         gameRun()
 
@@ -191,20 +182,10 @@ class MainActivity : AppCompatActivity() {
                 Thread.sleep(speed)
                 runOnUiThread {
 
-                    for (i in 0 until 4) {
-                        for (j in 0 until 4) {
-                                boardViewNovaPeca[i][j]!!.setImageResource(R.drawable.white)
-
-                            }
-                        }
-
-
                     for (i in 0 until LINHA) {
                         for (j in 0 until COLUNA) {
                             if (vm.board[i][j] == 0) {
                                 boardView[i][j]!!.setImageResource(R.drawable.black)
-                            } else {
-                                boardView[i][j]!!.setImageResource(getCor(pt.id))
                             }
                         }
                     }
@@ -247,7 +228,6 @@ class MainActivity : AppCompatActivity() {
 
         running=true
         gameRun()
-
 
     }
 
@@ -297,7 +277,6 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    fun createRadom_Peça(): Int = kotlin.random.Random.nextInt(0, 4)
 
     fun setBoard() {
         vm.board[pt.pointA.line][pt.pointA.column] = 1
@@ -331,18 +310,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun pontuacaoMaxima() {
-        val settings = getSharedPreferences("Wesley", Context.MODE_PRIVATE)
-        var editor = settings.edit()
-        var score = settings.getInt("SCORE", 0)
 
-        if (score < textPontos.text.toString().toInt()) {
-            editor.putInt("SCORE", Integer.parseInt(textPontos.text.toString()))
-            editor.commit()
-        }
-
-
-    }
 
     fun getCor(id: Int): Int {
         return when (id) {
@@ -365,22 +333,45 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun novaPieca() {
-        gameOver()
-        var novaPeca = createRadom_Peça()
-//        if (novaPeca == 0) {
-//            pt = L(1, COLUNA / 2)
-//        } else if (novaPeca == 1) {
-        pt = I(1, COLUNA / 2)
+        if(running){
+            gameOver()
+        }
 
-//        } else if (novaPeca == 2) {
-//            pt = O(1, COLUNA / 2)
-//
-//        } else if (novaPeca == 3) {
-//            pt = T(1, COLUNA / 2)
-//
-//        } else {
-//            pt = S(1, COLUNA / 2)
-//        }
+        var novaPeca =proxPeca
+
+        if (novaPeca == 0) {
+            pt = L(1, COLUNA / 2)
+        } else if (novaPeca == 1) {
+              pt = I(1, COLUNA / 2)
+
+        } else if (novaPeca == 2) {
+            pt = O(1, COLUNA / 2)
+
+        } else if (novaPeca == 3) {
+            pt = T(1, COLUNA / 2)
+
+        } else {
+            pt = S(1, COLUNA / 2)
+        }
+
+        Log.i("teste","${novaPeca}")
+        proxPeca= random.nextInt(5)
+
+        if(proxPeca == 0){
+            idProximaPeca.setImageResource(R.drawable.peca_i)
+        }else if(proxPeca == 1){
+
+            idProximaPeca.setImageResource(R.drawable.peca_l)
+
+        }else if(proxPeca == 2){
+            idProximaPeca.setImageResource(R.drawable.peca_o)
+        }else if(proxPeca == 3){
+            idProximaPeca.setImageResource(R.drawable.peca_t)
+        }else{
+            idProximaPeca.setImageResource(R.drawable.peca_s)
+        }
+
+
     }
 
 

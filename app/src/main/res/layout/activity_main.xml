@@ -47,11 +47,12 @@
             android:textColor="#ffffff"
             android:textSize="24dp" />
 
-        <GridLayout
-        android:id="@+id/proximaPeca"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        <ImageView
+            android:id="@+id/idProximaPeca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/peca_l" />
 
 
     </LinearLayout>
