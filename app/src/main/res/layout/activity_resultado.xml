@@ -54,5 +54,25 @@
         android:textSize="30sp"
         android:visibility="gone" />
 
+    <Button
+        android:id="@+id/btnNovoJogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#011F27"
+        android:text="@string/novo_jogo"
+
+        android:textColor="#ffffff"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/btnSair"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#011F27"
+        android:text="@string/sair"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+
+
 
 </LinearLayout>

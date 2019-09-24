@@ -1,6 +1,7 @@
 package br.ufrn.eaj.tads.gametetris
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -36,7 +37,15 @@ class ResultadoActivity : AppCompatActivity() {
         }
 
 
+        btnNovoJogo.setOnClickListener {
+            var i = Intent(this, MainActivity::class.java)
+            startActivity(i)
+        }
 
+        btnSair.setOnClickListener {
+            var i = Intent(this, StartActivity::class.java)
+            startActivity(i)
+        }
 
     }
 }

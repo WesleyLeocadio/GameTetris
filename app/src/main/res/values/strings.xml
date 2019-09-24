@@ -17,4 +17,5 @@
     <string name="texto_conf">Selecione o nível do jogo</string>
     <string name="semValor">---</string>
     <string name="resultados">Resultados</string>
+    <string name="sair">Sair</string>
 </resources>
