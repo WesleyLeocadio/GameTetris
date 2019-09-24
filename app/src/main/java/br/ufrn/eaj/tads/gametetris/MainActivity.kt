@@ -1,5 +1,6 @@
 package br.ufrn.eaj.tads.gametetris
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import br.ufrn.eaj.tads.gametetris.domain.*
@@ -106,6 +108,12 @@ class MainActivity : AppCompatActivity() {
         btnPause.setOnClickListener {
             if (pause == 0) {
                 running = false
+                var i = Intent(this, StartActivity::class.java)
+                var b = Bundle()
+                b.putBoolean("cod", true)
+                i.putExtras(b)
+                startActivityForResult(i, 99)
+
                 pause = 1
             } else {
                 running = true
@@ -113,6 +121,8 @@ class MainActivity : AppCompatActivity() {
                 gameRun()
             }
         }
+
+
 
         btnBaixo.setOnClickListener {
             try {
@@ -234,8 +244,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        running = true
+
+        running=true
         gameRun()
+
+
     }
 
     fun removeLinha(i: Int) {
@@ -369,4 +382,25 @@ class MainActivity : AppCompatActivity() {
 //            pt = S(1, COLUNA / 2)
 //        }
     }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            99 -> {
+                when (resultCode) {
+                    Activity.RESULT_OK -> {
+                        var i = Intent(this, MainActivity::class.java)
+                        startActivity(i)
+
+
+                    }
+                }
+            }
+        }
+
+
+    }
+
 }

@@ -11,7 +11,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ResultadoActivity"></activity>
         <activity android:name=".ConfiguracaoActivity" />
-        <activity android:name=".StartActivity">
+        <activity android:name=".StartActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

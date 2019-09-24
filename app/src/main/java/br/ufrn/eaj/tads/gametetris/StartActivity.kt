@@ -1,5 +1,6 @@
 package br.ufrn.eaj.tads.gametetris
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,7 +16,15 @@ class StartActivity : AppCompatActivity(),View.OnClickListener {
 
         btnComecarJogo.setOnClickListener(this)
         btnConfiguracoes.setOnClickListener(this)
-        btnResultado.setOnClickListener(this)
+        btnContinuar.setOnClickListener(this)
+
+        var params = intent.extras
+        var texto = params?.getBoolean("cod")
+        when (texto) {
+            true -> {
+                btnContinuar.visibility = View.VISIBLE
+            }
+        }
 
     }
 
@@ -32,9 +41,10 @@ class StartActivity : AppCompatActivity(),View.OnClickListener {
                 startActivity(i)
 
             }
-            btnResultado.id->{
-                var i = Intent(this, ResultadoActivity::class.java)
-                startActivity(i)
+            btnContinuar.id->{
+                var i = Intent()
+                setResult(Activity.RESULT_OK)
+                finish()
 
             }
 
