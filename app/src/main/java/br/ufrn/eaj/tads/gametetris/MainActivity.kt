@@ -20,7 +20,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     //36
     //26
-    val LINHA = 28
+    val LINHA = 26
     val COLUNA = 20
     var running = true
     var speed: Long = 250
@@ -33,29 +33,33 @@ class MainActivity : AppCompatActivity() {
     var pt: Piece = I(0, COLUNA / 2)
 
 
-    var board = Array(LINHA) {
-        Array(COLUNA) { 0 }
+    var boardViewNovaPeca = Array(4) {
+        arrayOfNulls<ImageView>(4)
     }
 
     var boardView = Array(LINHA) {
         arrayOfNulls<ImageView>(COLUNA)
     }
 
-//    val vm:ViewModel by lazy {
-//        ViewModelProviders.of(this)[ViewModel::class.java]
-//    }
+    val vm: BoardViewModel by lazy {
+        ViewModelProviders.of(this)[BoardViewModel::class.java]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val settings = getSharedPreferences("Wesley", Context.MODE_PRIVATE)
-        groupRadio = settings.getInt("selecionado", 0)
         escolhido = settings.getInt("velocidade", 0)
         speed = escolhido.toLong()
-        Log.i("erro", " NOVO -> grupo 0${groupRadio} escolhido ${escolhido} ")
+
 
         gridboard.rowCount = LINHA
         gridboard.columnCount = COLUNA
+
+        proximaPeca.rowCount = 4
+        proximaPeca.columnCount = 4
+
 
         val inflater = LayoutInflater.from(this)
 
@@ -67,12 +71,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        for (i in 0 until 4) {
+            for (j in 0 until 4) {
+                boardViewNovaPeca[i][j] =
+                    inflater.inflate(R.layout.inflate_image_view, proximaPeca, false) as ImageView
+                proximaPeca.addView(boardViewNovaPeca[i][j])
+            }
+        }
+
         gameRun()
 
         btnDireita.setOnClickListener {
             try {
-                if ((board[pt.pointA.line][pt.pointA.column + 1] == 0) && (board[pt.pointB.line][pt.pointB.column + 1] == 0)
-                    && (board[pt.pointC.line][pt.pointC.column + 1] == 0) && (board[pt.pointD.line][pt.pointD.column + 1] == 0)
+                if ((vm.board[pt.pointA.line][pt.pointA.column + 1] == 0) && (vm.board[pt.pointB.line][pt.pointB.column + 1] == 0)
+                    && (vm.board[pt.pointC.line][pt.pointC.column + 1] == 0) && (vm.board[pt.pointD.line][pt.pointD.column + 1] == 0)
                 ) {//bateu no lado direito
                     pt.moveRight()
                 }
@@ -81,8 +93,8 @@ class MainActivity : AppCompatActivity() {
         }
         btnEsquerda.setOnClickListener {
             try {
-                if ((board[pt.pointA.line][pt.pointA.column - 1] == 0) && (board[pt.pointB.line][pt.pointB.column - 1] == 0)
-                    && (board[pt.pointC.line][pt.pointC.column - 1] == 0) && (board[pt.pointD.line][pt.pointD.column - 1] == 0)
+                if ((vm.board[pt.pointA.line][pt.pointA.column - 1] == 0) && (vm.board[pt.pointB.line][pt.pointB.column - 1] == 0)
+                    && (vm.board[pt.pointC.line][pt.pointC.column - 1] == 0) && (vm.board[pt.pointD.line][pt.pointD.column - 1] == 0)
                 ) {//bateu no lado direito
                     pt.moveLeft()
                 }
@@ -104,8 +116,8 @@ class MainActivity : AppCompatActivity() {
 
         btnBaixo.setOnClickListener {
             try {
-                if ((board[pt.pointA.line + 1][pt.pointA.column] == 0) && (board[pt.pointB.line + 1][pt.pointB.column] == 0)
-                    && (board[pt.pointC.line + 1][pt.pointC.column] == 0) && (board[pt.pointD.line + 1][pt.pointD.column] == 0)
+                if ((vm.board[pt.pointA.line + 1][pt.pointA.column] == 0) && (vm.board[pt.pointB.line + 1][pt.pointB.column] == 0)
+                    && (vm.board[pt.pointC.line + 1][pt.pointC.column] == 0) && (vm.board[pt.pointD.line + 1][pt.pointD.column] == 0)
                 ) {//bateu no lado direito
                     pt.moveDown()
                 }
@@ -117,32 +129,32 @@ class MainActivity : AppCompatActivity() {
         btnRotacionar.setOnClickListener {
             try {
                 if (pt.cod == 0) {
-                    if ((board[pt.pointA.line + 1][pt.pointA.column] == 0) && (board[pt.pointB.line + 1][pt.pointB.column] == 0) && (board[pt.pointC.line + 1][pt.pointC.column] == 0) && (board[pt.pointD.line + 1][pt.pointD.column] == 0)) {
+                    if ((vm.board[pt.pointA.line + 1][pt.pointA.column] == 0) && (vm.board[pt.pointB.line + 1][pt.pointB.column] == 0) && (vm.board[pt.pointC.line + 1][pt.pointC.column] == 0) && (vm.board[pt.pointD.line + 1][pt.pointD.column] == 0)) {
 
-                        if ((board[pt.pointA.line][pt.pointA.column - 1] == 0) && (board[pt.pointB.line][pt.pointB.column - 1] == 0)
-                            && (board[pt.pointC.line][pt.pointC.column - 1] == 0) && (board[pt.pointD.line][pt.pointD.column - 1] == 0)
+                        if ((vm.board[pt.pointA.line][pt.pointA.column - 1] == 0) && (vm.board[pt.pointB.line][pt.pointB.column - 1] == 0)
+                            && (vm.board[pt.pointC.line][pt.pointC.column - 1] == 0) && (vm.board[pt.pointD.line][pt.pointD.column - 1] == 0)
                         ) {
                             pt.moveRotate()
                         }
                     }
                 } else {
                     if (pt.fleck == 1) {
-                        if ((board[pt.pointA.line][pt.pointA.column - 2] == 0) && (board[pt.pointB.line][pt.pointB.column - 2] == 0)
-                            && (board[pt.pointC.line][pt.pointC.column - 2] == 0) && (board[pt.pointD.line][pt.pointD.column - 2] == 0)
-                            && (board[pt.pointA.line][pt.pointA.column + 2] == 0) && (board[pt.pointB.line][pt.pointB.column + 2] == 0) &&
-                            (board[pt.pointC.line][pt.pointC.column + 2] == 0) && (board[pt.pointD.line][pt.pointD.column + 2] == 0)
+                        if ((vm.board[pt.pointA.line][pt.pointA.column - 2] == 0) && (vm.board[pt.pointB.line][pt.pointB.column - 2] == 0)
+                            && (vm.board[pt.pointC.line][pt.pointC.column - 2] == 0) && (vm.board[pt.pointD.line][pt.pointD.column - 2] == 0)
+                            && (vm.board[pt.pointA.line][pt.pointA.column + 2] == 0) && (vm.board[pt.pointB.line][pt.pointB.column + 2] == 0) &&
+                            (vm.board[pt.pointC.line][pt.pointC.column + 2] == 0) && (vm.board[pt.pointD.line][pt.pointD.column + 2] == 0)
                         ) {
 
-                            if ((board[pt.pointA.line][pt.pointA.column - 1] == 0) && (board[pt.pointB.line][pt.pointB.column - 1] == 0)
-                                && (board[pt.pointC.line][pt.pointC.column - 1] == 0) && (board[pt.pointD.line][pt.pointD.column - 1] == 0) && (board[pt.pointA.line][pt.pointA.column + 1] == 0)
-                                && (board[pt.pointB.line][pt.pointB.column + 1] == 0) && (board[pt.pointC.line][pt.pointC.column + 1] == 0) && (board[pt.pointD.line][pt.pointD.column + 1] == 0)
+                            if ((vm.board[pt.pointA.line][pt.pointA.column - 1] == 0) && (vm.board[pt.pointB.line][pt.pointB.column - 1] == 0)
+                                && (vm.board[pt.pointC.line][pt.pointC.column - 1] == 0) && (vm.board[pt.pointD.line][pt.pointD.column - 1] == 0) && (vm.board[pt.pointA.line][pt.pointA.column + 1] == 0)
+                                && (vm.board[pt.pointB.line][pt.pointB.column + 1] == 0) && (vm.board[pt.pointC.line][pt.pointC.column + 1] == 0) && (vm.board[pt.pointD.line][pt.pointD.column + 1] == 0)
                             ) {
 
-                                if ((board[pt.pointA.line + 2][pt.pointA.column] == 0) && (board[pt.pointB.line + 2][pt.pointB.column] == 0)
-                                    && (board[pt.pointC.line + 2][pt.pointC.column] == 0) && (board[pt.pointD.line + 2][pt.pointD.column] == 0)
+                                if ((vm.board[pt.pointA.line + 2][pt.pointA.column] == 0) && (vm.board[pt.pointB.line + 2][pt.pointB.column] == 0)
+                                    && (vm.board[pt.pointC.line + 2][pt.pointC.column] == 0) && (vm.board[pt.pointD.line + 2][pt.pointD.column] == 0)
                                 ) {//bateu no lado direito
-                                    if ((board[pt.pointA.line + 1][pt.pointA.column] == 0) && (board[pt.pointB.line + 1][pt.pointB.column] == 0)
-                                        && (board[pt.pointC.line + 1][pt.pointC.column] == 0) && (board[pt.pointD.line + 1][pt.pointD.column] == 0)
+                                    if ((vm.board[pt.pointA.line + 1][pt.pointA.column] == 0) && (vm.board[pt.pointB.line + 1][pt.pointB.column] == 0)
+                                        && (vm.board[pt.pointC.line + 1][pt.pointC.column] == 0) && (vm.board[pt.pointD.line + 1][pt.pointD.column] == 0)
                                     ) {
                                         pt.moveRotate()
                                     }
@@ -168,17 +180,28 @@ class MainActivity : AppCompatActivity() {
             while (running) {
                 Thread.sleep(speed)
                 runOnUiThread {
+
+                    for (i in 0 until 4) {
+                        for (j in 0 until 4) {
+                                boardViewNovaPeca[i][j]!!.setImageResource(R.drawable.white)
+
+                            }
+                        }
+
+
                     for (i in 0 until LINHA) {
                         for (j in 0 until COLUNA) {
-                            if (board[i][j] == 0) {
+                            if (vm.board[i][j] == 0) {
                                 boardView[i][j]!!.setImageResource(R.drawable.black)
+                            } else {
+                                boardView[i][j]!!.setImageResource(getCor(pt.id))
                             }
                         }
                     }
 
                     if (pt.pointC.line < LINHA - 1 && pt.pointD.line < LINHA - 1 && pt.pointA.line < LINHA - 1 && pt.pointB.line < LINHA - 1) {
-                        if ((board[pt.pointA.line + 1][pt.pointA.column] == 1) || (board[pt.pointB.line + 1][pt.pointB.column] == 1) ||
-                            (board[pt.pointC.line + 1][pt.pointC.column] == 1) || (board[pt.pointD.line + 1][pt.pointD.column] == 1)
+                        if ((vm.board[pt.pointA.line + 1][pt.pointA.column] == 1) || (vm.board[pt.pointB.line + 1][pt.pointB.column] == 1) ||
+                            (vm.board[pt.pointC.line + 1][pt.pointC.column] == 1) || (vm.board[pt.pointD.line + 1][pt.pointD.column] == 1)
                         ) {
                             setBoard()
                             setBoardView()
@@ -217,11 +240,11 @@ class MainActivity : AppCompatActivity() {
 
     fun removeLinha(i: Int) {
         for (j in 0 until COLUNA) {
-            board[i][j] = 0
+            vm.board[i][j] = 0
         }
         for (linha in i downTo 1) {
             for (coluna in COLUNA - 1 downTo 0) {
-                board[linha][coluna] = board[linha - 1][coluna]
+                vm.board[linha][coluna] = vm.board[linha - 1][coluna]
             }
         }
         pontos += COLUNA
@@ -233,7 +256,7 @@ class MainActivity : AppCompatActivity() {
         for (i in LINHA - 1 downTo 0) {
             var cont = 0
             for (j in COLUNA - 1 downTo 0) {
-                if (board[i][j] == 1) {
+                if (vm.board[i][j] == 1) {
                     cont++
                 }
             }
@@ -251,7 +274,7 @@ class MainActivity : AppCompatActivity() {
     fun verificandoUltimaLinha(x: Int): Boolean {
         var cont = 0
         for (d in COLUNA - 1 downTo 0) {
-            if (board[x][d] == 1) {
+            if (vm.board[x][d] == 1) {
                 cont++
             }
         }
@@ -264,10 +287,10 @@ class MainActivity : AppCompatActivity() {
     fun createRadom_Peça(): Int = kotlin.random.Random.nextInt(0, 4)
 
     fun setBoard() {
-        board[pt.pointA.line][pt.pointA.column] = 1
-        board[pt.pointB.line][pt.pointB.column] = 1
-        board[pt.pointC.line][pt.pointC.column] = 1
-        board[pt.pointD.line][pt.pointD.column] = 1
+        vm.board[pt.pointA.line][pt.pointA.column] = 1
+        vm.board[pt.pointB.line][pt.pointB.column] = 1
+        vm.board[pt.pointC.line][pt.pointC.column] = 1
+        vm.board[pt.pointD.line][pt.pointD.column] = 1
     }
 
     fun setBoardView() {
@@ -279,7 +302,7 @@ class MainActivity : AppCompatActivity() {
 
     fun gameOver() {
         for (i in 0 until COLUNA) {
-            if (board[3][i] == 1) {
+            if (vm.board[3][i] == 1) {
                 running = false
                 var i = Intent(this, ResultadoActivity::class.java)
                 var mensagem = textPontos.text.toString()
@@ -311,7 +334,7 @@ class MainActivity : AppCompatActivity() {
     fun getCor(id: Int): Int {
         return when (id) {
             0 -> {
-                R.drawable.azul
+                R.drawable.black
             }
             1 -> {
                 R.drawable.amarelo

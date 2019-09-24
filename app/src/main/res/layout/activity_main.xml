@@ -39,22 +39,20 @@
             android:textSize="24dp" />
 
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginLeft="50sp"
-            android:text="@string/proxima"
+            android:layout_marginLeft="20sp"
+            android:text="Próxima: "
             android:textColor="#ffffff"
             android:textSize="24dp" />
 
-
         <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="60sp"
-            android:layout_marginLeft="5sp">
-        </GridLayout>
+        android:id="@+id/proximaPeca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
 
     </LinearLayout>
 

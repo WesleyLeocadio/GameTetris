@@ -2,8 +2,8 @@ package br.ufrn.eaj.tads.gametetris
 
 import androidx.lifecycle.ViewModel
 
-class ViewModel : ViewModel() {
-    val LINHA = 36
+class BoardViewModel : ViewModel() {
+    val LINHA = 26
     val COLUNA = 20
 
     var board = Array(LINHA) {
