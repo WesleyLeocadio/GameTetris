@@ -93,7 +93,7 @@
         android:height="50dp"
         android:background="@color/colorAccent"
         android:layout_marginTop="40dp"
-        android:text="Aplicar"
+        android:text="@string/aplicar"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

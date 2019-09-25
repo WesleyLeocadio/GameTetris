@@ -56,7 +56,7 @@
         android:layout_width="151dp"
         android:layout_height="wrap_content"
         android:background="#000000"
-        android:text="Continuar"
+        android:text="@string/continuar"
         android:textColor="#ffffff"
         android:textSize="24sp"
         android:visibility="gone"

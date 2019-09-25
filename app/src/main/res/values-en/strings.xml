@@ -10,4 +10,17 @@
     <string name="texto_conf">"Select game level "</string>
     <string name="novo_jogo">New Game</string>
     <string name="configurar">Settings</string>
+    <string name="sair">Exit</string>
+    <string name="rotacionar">Rotate</string>
+    <string name="resultados">Result</string>
+    <string name="pause">Stop</string>
+    <string name="novo_recorde">New record</string>
+    <string name="proximaPeca">Next piece</string>
+    <string name="rot">Rot</string>
+    <string name="semValor">---</string>
+    <string name="esq">esq</string>
+    <string name="dir">dir</string>
+    <string name="continuar">Continue</string>
+    <string name="aplicar">Set</string>
+    <string name="baixo">Low</string>
 </resources>

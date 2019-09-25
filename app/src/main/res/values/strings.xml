@@ -18,4 +18,8 @@
     <string name="semValor">---</string>
     <string name="resultados">Resultados</string>
     <string name="sair">Sair</string>
+    <string name="continuar">Continuar</string>
+    <string name="novo_recorde">Novo Recorde</string>
+    <string name="aplicar">Aplicar</string>
+    <string name="proximaPeca">Próxima:</string>
 </resources>

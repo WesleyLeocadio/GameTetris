@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     var random = Random
 
     var pause = 0
-    var pt: Piece = I(0, COLUNA / 2)
+    var pt: Piece = P(0, COLUNA / 2)
 
 
     var boardView = Array(LINHA) {
@@ -62,8 +62,6 @@ class MainActivity : AppCompatActivity() {
                 gridboard.addView(boardView[i][j])
             }
         }
-
-
 
         gameRun()
 
@@ -107,7 +105,6 @@ class MainActivity : AppCompatActivity() {
                     pt.moveDown()
                 }
             } catch (e: ArrayIndexOutOfBoundsException) {
-
                 Log.i("ERRO", "Bateu esquerda")
             }
         }
@@ -305,6 +302,9 @@ class MainActivity : AppCompatActivity() {
             3 -> {
                 R.drawable.verde
             }
+            4-> {
+                R.drawable.vermelho
+            }
             else -> {
                 R.drawable.azul
             }
@@ -313,37 +313,30 @@ class MainActivity : AppCompatActivity() {
 
     fun novaPieca() {
         if (running) {gameOver()}
+        pt=P(0, COLUNA / 2)
 
+        var colum = random.nextInt(2,18)
         var novaPeca = proxPeca
-        if (novaPeca == 0) {
-            pt = L(1, COLUNA / 2)
-        } else if (novaPeca == 1) {
-            pt = I(1, COLUNA / 2)
+        when(novaPeca) {
+            0 -> {pt = L(1, colum)}
+            1 -> {pt = I(1, colum)}
+            2 -> {pt = O(1, colum)}
+            3 -> {pt = T(1, colum)}
+            4 -> {pt = P(1, colum)}
+            else->{pt = S(1, colum)}
 
-        } else if (novaPeca == 2) {
-            pt = O(1, COLUNA / 2)
+        }
+        proxPeca = random.nextInt(6)
+        when(proxPeca) {
+            0 -> {idProximaPeca.setImageResource(R.drawable.peca_i)}
+            1 -> { idProximaPeca.setImageResource(R.drawable.peca_l)}
+            2 -> {idProximaPeca.setImageResource(R.drawable.peca_o)}
+            3 -> { idProximaPeca.setImageResource(R.drawable.peca_t)}
+            4 -> {idProximaPeca.setImageResource(R.drawable.peca_p)}
+            else->{idProximaPeca.setImageResource(R.drawable.peca_s)}
 
-        } else if (novaPeca == 3) {
-            pt = T(1, COLUNA / 2)
-
-        } else {
-            pt = S(1, COLUNA / 2)
         }
 
-        Log.i("teste", "${novaPeca}")
-        proxPeca = random.nextInt(5)
-
-        if (proxPeca == 0) {
-            idProximaPeca.setImageResource(R.drawable.peca_i)
-        } else if (proxPeca == 1) {
-            idProximaPeca.setImageResource(R.drawable.peca_l)
-        } else if (proxPeca == 2) {
-            idProximaPeca.setImageResource(R.drawable.peca_o)
-        } else if (proxPeca == 3) {
-            idProximaPeca.setImageResource(R.drawable.peca_t)
-        } else {
-            idProximaPeca.setImageResource(R.drawable.peca_s)
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
