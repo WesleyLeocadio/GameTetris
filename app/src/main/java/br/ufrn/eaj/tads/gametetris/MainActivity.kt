@@ -9,12 +9,9 @@ import android.util.Log
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.LayoutInflater
-
 import androidx.lifecycle.ViewModelProviders
 import br.ufrn.eaj.tads.gametetris.domain.*
-import java.util.*
 import kotlin.random.Random
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,8 +30,6 @@ class MainActivity : AppCompatActivity() {
 
     var pause = 0
     var pt: Piece = I(0, COLUNA / 2)
-
-
 
 
     var boardView = Array(LINHA) {
@@ -58,8 +53,6 @@ class MainActivity : AppCompatActivity() {
         gridboard.columnCount = COLUNA
 
 
-
-
         val inflater = LayoutInflater.from(this)
 
         for (i in 0 until LINHA) {
@@ -77,12 +70,10 @@ class MainActivity : AppCompatActivity() {
         btnDireita.setOnClickListener {
             try {
                 if ((vm.board[pt.pointA.line][pt.pointA.column + 1] == 0) && (vm.board[pt.pointB.line][pt.pointB.column + 1] == 0)
-                    && (vm.board[pt.pointC.line][pt.pointC.column + 1] == 0) && (vm.board[pt.pointD.line][pt.pointD.column + 1] == 0)
-                ) {//bateu no lado direito
+                    && (vm.board[pt.pointC.line][pt.pointC.column + 1] == 0) && (vm.board[pt.pointD.line][pt.pointD.column + 1] == 0)) {//bateu no lado direito
                     pt.moveRight()
                 }
-            } catch (e: ArrayIndexOutOfBoundsException) {
-            }
+            } catch (e: ArrayIndexOutOfBoundsException) {}
         }
         btnEsquerda.setOnClickListener {
             try {
@@ -91,9 +82,7 @@ class MainActivity : AppCompatActivity() {
                 ) {//bateu no lado direito
                     pt.moveLeft()
                 }
-            } catch (e: ArrayIndexOutOfBoundsException) {
-
-            }
+            } catch (e: ArrayIndexOutOfBoundsException) { }
         }
 
         btnPause.setOnClickListener {
@@ -104,7 +93,6 @@ class MainActivity : AppCompatActivity() {
                 b.putBoolean("cod", true)
                 i.putExtras(b)
                 startActivityForResult(i, 99)
-
                 pause = 1
             } else {
                 running = true
@@ -113,13 +101,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
         btnBaixo.setOnClickListener {
             try {
-                if ((vm.board[pt.pointA.line + 1][pt.pointA.column] == 0) && (vm.board[pt.pointB.line + 1][pt.pointB.column] == 0)
-                    && (vm.board[pt.pointC.line + 1][pt.pointC.column] == 0) && (vm.board[pt.pointD.line + 1][pt.pointD.column] == 0)
-                ) {//bateu no lado direito
+                if (verificarProximaLinha()) {//bateu no lado direito
                     pt.moveDown()
                 }
             } catch (e: ArrayIndexOutOfBoundsException) {
@@ -127,52 +111,42 @@ class MainActivity : AppCompatActivity() {
                 Log.i("ERRO", "Bateu esquerda")
             }
         }
+
         btnRotacionar.setOnClickListener {
             try {
                 if (pt.cod == 0) {
-                    if ((vm.board[pt.pointA.line + 1][pt.pointA.column] == 0) && (vm.board[pt.pointB.line + 1][pt.pointB.column] == 0) && (vm.board[pt.pointC.line + 1][pt.pointC.column] == 0) && (vm.board[pt.pointD.line + 1][pt.pointD.column] == 0)) {
+                    if (pt.fleck == 2) {
+                        if (verificarProximaLinha()) {
 
-                        if ((vm.board[pt.pointA.line][pt.pointA.column - 1] == 0) && (vm.board[pt.pointB.line][pt.pointB.column - 1] == 0)
-                            && (vm.board[pt.pointC.line][pt.pointC.column - 1] == 0) && (vm.board[pt.pointD.line][pt.pointD.column - 1] == 0)
-                        ) {
+                            if (verificarColunas()) {
+                                if (verificarProximaLinha()) {
+                                    pt.moveRotate()
+                                }
+                            }
+                        }
+                    } else {
+                        if (verificarProximaLinha()) {
                             pt.moveRotate()
                         }
                     }
                 } else {
                     if (pt.fleck == 1) {
                         if ((vm.board[pt.pointA.line][pt.pointA.column - 2] == 0) && (vm.board[pt.pointB.line][pt.pointB.column - 2] == 0)
-                            && (vm.board[pt.pointC.line][pt.pointC.column - 2] == 0) && (vm.board[pt.pointD.line][pt.pointD.column - 2] == 0)
-                            && (vm.board[pt.pointA.line][pt.pointA.column + 2] == 0) && (vm.board[pt.pointB.line][pt.pointB.column + 2] == 0) &&
-                            (vm.board[pt.pointC.line][pt.pointC.column + 2] == 0) && (vm.board[pt.pointD.line][pt.pointD.column + 2] == 0)
-                        ) {
-
-                            if ((vm.board[pt.pointA.line][pt.pointA.column - 1] == 0) && (vm.board[pt.pointB.line][pt.pointB.column - 1] == 0)
-                                && (vm.board[pt.pointC.line][pt.pointC.column - 1] == 0) && (vm.board[pt.pointD.line][pt.pointD.column - 1] == 0) && (vm.board[pt.pointA.line][pt.pointA.column + 1] == 0)
-                                && (vm.board[pt.pointB.line][pt.pointB.column + 1] == 0) && (vm.board[pt.pointC.line][pt.pointC.column + 1] == 0) && (vm.board[pt.pointD.line][pt.pointD.column + 1] == 0)
-                            ) {
-
-                                if ((vm.board[pt.pointA.line + 2][pt.pointA.column] == 0) && (vm.board[pt.pointB.line + 2][pt.pointB.column] == 0)
-                                    && (vm.board[pt.pointC.line + 2][pt.pointC.column] == 0) && (vm.board[pt.pointD.line + 2][pt.pointD.column] == 0)
-                                ) {//bateu no lado direito
-                                    if ((vm.board[pt.pointA.line + 1][pt.pointA.column] == 0) && (vm.board[pt.pointB.line + 1][pt.pointB.column] == 0)
-                                        && (vm.board[pt.pointC.line + 1][pt.pointC.column] == 0) && (vm.board[pt.pointD.line + 1][pt.pointD.column] == 0)
-                                    ) {
-                                        pt.moveRotate()
-                                    }
-                                }
+                            && (vm.board[pt.pointC.line][pt.pointC.column - 2] == 0) && (vm.board[pt.pointD.line][pt.pointD.column - 2] == 0)) {
+                            if (verificarColunas()) {
+                                pt.moveRotate()
                             }
                         }
                     } else {
-                        pt.moveRotate()
-
-
+                        if ((vm.board[pt.pointA.line + 2][pt.pointA.column] == 0) && (vm.board[pt.pointB.line + 2][pt.pointB.column] == 0)
+                            && (vm.board[pt.pointC.line + 2][pt.pointC.column] == 0) && (vm.board[pt.pointD.line + 2][pt.pointD.column] == 0)) {//bateu no lado direito
+                            if (verificarProximaLinha()) {
+                                pt.moveRotate()
+                            }
+                        }
                     }
                 }
-            } catch (e: ArrayIndexOutOfBoundsException) {
-
-                Log.i("ERRO", "Bateu esquerda")
-            }
-
+            } catch (e: ArrayIndexOutOfBoundsException) {}
         }
     }
 
@@ -181,7 +155,6 @@ class MainActivity : AppCompatActivity() {
             while (running) {
                 Thread.sleep(speed)
                 runOnUiThread {
-
                     for (i in 0 until LINHA) {
                         for (j in 0 until COLUNA) {
                             if (vm.board[i][j] == 0) {
@@ -226,8 +199,22 @@ class MainActivity : AppCompatActivity() {
     override fun onRestart() {
         super.onRestart()
 
-        running=true
+        running = true
         gameRun()
+
+    }
+
+    fun verificarProximaLinha(): Boolean {
+        return (vm.board[pt.pointA.line + 1][pt.pointA.column] == 0) && (vm.board[pt.pointB.line + 1][pt.pointB.column] == 0)
+                && (vm.board[pt.pointC.line + 1][pt.pointC.column] == 0) && (vm.board[pt.pointD.line + 1][pt.pointD.column] == 0)
+
+    }
+
+    fun verificarColunas(): Boolean {
+        return ((vm.board[pt.pointA.line][pt.pointA.column - 1] == 0) && (vm.board[pt.pointB.line][pt.pointB.column - 1] == 0)
+                && (vm.board[pt.pointC.line][pt.pointC.column - 1] == 0) && (vm.board[pt.pointD.line][pt.pointD.column - 1] == 0) && (vm.board[pt.pointA.line][pt.pointA.column + 1] == 0)
+                && (vm.board[pt.pointB.line][pt.pointB.column + 1] == 0) && (vm.board[pt.pointC.line][pt.pointC.column + 1] == 0) && (vm.board[pt.pointD.line][pt.pointD.column + 1] == 0)
+                )
 
     }
 
@@ -263,7 +250,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     fun verificandoUltimaLinha(x: Int): Boolean {
         var cont = 0
         for (d in COLUNA - 1 downTo 0) {
@@ -271,12 +257,9 @@ class MainActivity : AppCompatActivity() {
                 cont++
             }
         }
-        if (cont == COLUNA) {
-            return true
-        }
+        if (cont == COLUNA) { return true }
         return false
     }
-
 
     fun setBoard() {
         vm.board[pt.pointA.line][pt.pointA.column] = 1
@@ -305,12 +288,8 @@ class MainActivity : AppCompatActivity() {
                 finish()
                 break
             }
-
         }
-
     }
-
-
 
     fun getCor(id: Int): Int {
         return when (id) {
@@ -333,16 +312,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun novaPieca() {
-        if(running){
-            gameOver()
-        }
+        if (running) {gameOver()}
 
-        var novaPeca =proxPeca
-
+        var novaPeca = proxPeca
         if (novaPeca == 0) {
             pt = L(1, COLUNA / 2)
         } else if (novaPeca == 1) {
-              pt = I(1, COLUNA / 2)
+            pt = I(1, COLUNA / 2)
 
         } else if (novaPeca == 2) {
             pt = O(1, COLUNA / 2)
@@ -354,44 +330,34 @@ class MainActivity : AppCompatActivity() {
             pt = S(1, COLUNA / 2)
         }
 
-        Log.i("teste","${novaPeca}")
-        proxPeca= random.nextInt(5)
+        Log.i("teste", "${novaPeca}")
+        proxPeca = random.nextInt(5)
 
-        if(proxPeca == 0){
+        if (proxPeca == 0) {
             idProximaPeca.setImageResource(R.drawable.peca_i)
-        }else if(proxPeca == 1){
-
+        } else if (proxPeca == 1) {
             idProximaPeca.setImageResource(R.drawable.peca_l)
-
-        }else if(proxPeca == 2){
+        } else if (proxPeca == 2) {
             idProximaPeca.setImageResource(R.drawable.peca_o)
-        }else if(proxPeca == 3){
+        } else if (proxPeca == 3) {
             idProximaPeca.setImageResource(R.drawable.peca_t)
-        }else{
+        } else {
             idProximaPeca.setImageResource(R.drawable.peca_s)
         }
-
-
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         when (requestCode) {
             99 -> {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
                         var i = Intent(this, MainActivity::class.java)
                         startActivity(i)
-
-
                     }
                 }
             }
         }
-
-
     }
 
 }
